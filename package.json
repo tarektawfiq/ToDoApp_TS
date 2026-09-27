@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "sass": "sass sass/:dist/css",
+     "sass:watch": "sass --watch sass:dist/css"
+  }
+}
