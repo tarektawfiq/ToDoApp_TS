@@ -10,7 +10,7 @@ interface tasksData {
 
 class Task<T extends tasksData> {
   private data: T[] = [];
-  private static count: number = 0;
+  private static count: number | string = 0;
 
   private itemFn(task: tasksData): string {
     const item = `<div class='taskaya' serialId='${task.id}'>
@@ -27,8 +27,8 @@ class Task<T extends tasksData> {
     }
     this.data.push(task);
     localStorage.tasks = JSON.stringify(this.data);
-    Task.count = JSON.parse(localStorage.tasks).length;
-    containerTasks.innerHTML += this.itemFn(task);
+    Task.count = "#";
+    containerTasks.insertAdjacentHTML("afterbegin", this.itemFn(task));
     input.value = "";
   }
   loadTasks(): void {
@@ -36,7 +36,9 @@ class Task<T extends tasksData> {
     let tasks: T[] = JSON.parse(localStorage.tasks);
     tasks.reverse();
     tasks.forEach((task) => {
-      Task.count++;
+      if (typeof Task.count === "number") {
+        Task.count++;
+      }
       containerTasks.innerHTML += this.itemFn(task);
     });
   }
